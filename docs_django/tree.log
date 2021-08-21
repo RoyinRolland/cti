@@ -1,0 +1,635 @@
+.
+├── Makefile
+├── README.rst
+├── _ext
+│   └── djangodocs.py
+├── _theme
+│   ├── djangodocs
+│   │   ├── genindex.html
+│   │   ├── layout.html
+│   │   ├── modindex.html
+│   │   ├── search.html
+│   │   ├── static
+│   │   │   ├── console-tabs.css
+│   │   │   ├── default.css
+│   │   │   ├── djangodocs.css
+│   │   │   ├── docicons-behindscenes.png
+│   │   │   ├── docicons-note.png
+│   │   │   ├── docicons-philosophy.png
+│   │   │   ├── docicons-warning.png
+│   │   │   ├── fontawesome
+│   │   │   │   ├── LICENSE.txt
+│   │   │   │   ├── README.md
+│   │   │   │   ├── css
+│   │   │   │   │   └── fa-brands.min.css
+│   │   │   │   └── webfonts
+│   │   │   │       ├── fa-brands-400.eot
+│   │   │   │       ├── fa-brands-400.svg
+│   │   │   │       ├── fa-brands-400.ttf
+│   │   │   │       ├── fa-brands-400.woff
+│   │   │   │       └── fa-brands-400.woff2
+│   │   │   ├── homepage.css
+│   │   │   └── reset-fonts-grids.css
+│   │   └── theme.conf
+│   └── djangodocs-epub
+│       ├── epub-cover.html
+│       ├── static
+│       │   ├── docicons-behindscenes.png
+│       │   ├── docicons-note.png
+│       │   ├── docicons-philosophy.png
+│       │   ├── docicons-warning.png
+│       │   └── epub.css
+│       └── theme.conf
+├── conf.py
+├── contents.txt
+├── faq
+│   ├── admin.txt
+│   ├── contributing.txt
+│   ├── general.txt
+│   ├── help.txt
+│   ├── index.txt
+│   ├── install.txt
+│   ├── models.txt
+│   ├── troubleshooting.txt
+│   └── usage.txt
+├── glossary.txt
+├── howto
+│   ├── _images
+│   │   ├── postmortem.png
+│   │   └── template-lines.png
+│   ├── auth-remote-user.txt
+│   ├── custom-file-storage.txt
+│   ├── custom-lookups.txt
+│   ├── custom-management-commands.txt
+│   ├── custom-model-fields.txt
+│   ├── custom-template-backend.txt
+│   ├── custom-template-tags.txt
+│   ├── deployment
+│   │   ├── asgi
+│   │   │   ├── daphne.txt
+│   │   │   ├── hypercorn.txt
+│   │   │   ├── index.txt
+│   │   │   └── uvicorn.txt
+│   │   ├── checklist.txt
+│   │   ├── index.txt
+│   │   └── wsgi
+│   │       ├── apache-auth.txt
+│   │       ├── gunicorn.txt
+│   │       ├── index.txt
+│   │       ├── modwsgi.txt
+│   │       └── uwsgi.txt
+│   ├── error-reporting.txt
+│   ├── index.txt
+│   ├── initial-data.txt
+│   ├── legacy-databases.txt
+│   ├── logging.txt
+│   ├── outputting-csv.txt
+│   ├── outputting-pdf.txt
+│   ├── overriding-templates.txt
+│   ├── static-files
+│   │   ├── deployment.txt
+│   │   └── index.txt
+│   ├── upgrade-version.txt
+│   ├── windows.txt
+│   └── writing-migrations.txt
+├── index.txt
+├── internals
+│   ├── _images
+│   │   ├── triage_process.graffle
+│   │   ├── triage_process.pdf
+│   │   └── triage_process.svg
+│   ├── contributing
+│   │   ├── bugs-and-features.txt
+│   │   ├── committing-code.txt
+│   │   ├── index.txt
+│   │   ├── localizing.txt
+│   │   ├── new-contributors.txt
+│   │   ├── triaging-tickets.txt
+│   │   ├── writing-code
+│   │   │   ├── coding-style.txt
+│   │   │   ├── index.txt
+│   │   │   ├── javascript.txt
+│   │   │   ├── submitting-patches.txt
+│   │   │   ├── unit-tests.txt
+│   │   │   └── working-with-git.txt
+│   │   └── writing-documentation.txt
+│   ├── deprecation.txt
+│   ├── git.txt
+│   ├── howto-release-django.txt
+│   ├── index.txt
+│   ├── mailing-lists.txt
+│   ├── organization.txt
+│   ├── release-process.txt
+│   └── security.txt
+├── intro
+│   ├── _images
+│   │   ├── admin01.png
+│   │   ├── admin02.png
+│   │   ├── admin03t.png
+│   │   ├── admin04t.png
+│   │   ├── admin05t.png
+│   │   ├── admin06t.png
+│   │   ├── admin07.png
+│   │   ├── admin08t.png
+│   │   ├── admin09.png
+│   │   ├── admin10t.png
+│   │   ├── admin11t.png
+│   │   ├── admin12t.png
+│   │   ├── admin13t.png
+│   │   └── admin14t.png
+│   ├── contributing.txt
+│   ├── index.txt
+│   ├── install.txt
+│   ├── overview.txt
+│   ├── reusable-apps.txt
+│   ├── tutorial01.txt
+│   ├── tutorial02.txt
+│   ├── tutorial03.txt
+│   ├── tutorial04.txt
+│   ├── tutorial05.txt
+│   ├── tutorial06.txt
+│   ├── tutorial07.txt
+│   └── whatsnext.txt
+├── make.bat
+├── man
+│   └── django-admin.1
+├── misc
+│   ├── api-stability.txt
+│   ├── design-philosophies.txt
+│   ├── distributions.txt
+│   └── index.txt
+├── ref
+│   ├── applications.txt
+│   ├── checks.txt
+│   ├── class-based-views
+│   │   ├── base.txt
+│   │   ├── flattened-index.txt
+│   │   ├── generic-date-based.txt
+│   │   ├── generic-display.txt
+│   │   ├── generic-editing.txt
+│   │   ├── index.txt
+│   │   ├── mixins-date-based.txt
+│   │   ├── mixins-editing.txt
+│   │   ├── mixins-multiple-object.txt
+│   │   ├── mixins-simple.txt
+│   │   ├── mixins-single-object.txt
+│   │   └── mixins.txt
+│   ├── clickjacking.txt
+│   ├── contrib
+│   │   ├── admin
+│   │   │   ├── _images
+│   │   │   │   ├── actions-as-modeladmin-methods.png
+│   │   │   │   ├── adding-actions-to-the-modeladmin.png
+│   │   │   │   ├── admin-actions.png
+│   │   │   │   ├── fieldsets.png
+│   │   │   │   ├── list_filter.png
+│   │   │   │   └── raw_id_fields.png
+│   │   │   ├── actions.txt
+│   │   │   ├── admindocs.txt
+│   │   │   ├── index.txt
+│   │   │   └── javascript.txt
+│   │   ├── auth.txt
+│   │   ├── contenttypes.txt
+│   │   ├── flatpages.txt
+│   │   ├── gis
+│   │   │   ├── admin.txt
+│   │   │   ├── commands.txt
+│   │   │   ├── db-api.txt
+│   │   │   ├── deployment.txt
+│   │   │   ├── feeds.txt
+│   │   │   ├── forms-api.txt
+│   │   │   ├── functions.txt
+│   │   │   ├── gdal.txt
+│   │   │   ├── geoip2.txt
+│   │   │   ├── geoquerysets.txt
+│   │   │   ├── geos.txt
+│   │   │   ├── index.txt
+│   │   │   ├── install
+│   │   │   │   ├── geolibs.txt
+│   │   │   │   ├── index.txt
+│   │   │   │   ├── postgis.txt
+│   │   │   │   └── spatialite.txt
+│   │   │   ├── layermapping.txt
+│   │   │   ├── measure.txt
+│   │   │   ├── model-api.txt
+│   │   │   ├── ogrinspect.txt
+│   │   │   ├── serializers.txt
+│   │   │   ├── sitemaps.txt
+│   │   │   ├── testing.txt
+│   │   │   ├── tutorial.txt
+│   │   │   └── utils.txt
+│   │   ├── humanize.txt
+│   │   ├── index.txt
+│   │   ├── messages.txt
+│   │   ├── postgres
+│   │   │   ├── aggregates.txt
+│   │   │   ├── constraints.txt
+│   │   │   ├── expressions.txt
+│   │   │   ├── fields.txt
+│   │   │   ├── forms.txt
+│   │   │   ├── functions.txt
+│   │   │   ├── index.txt
+│   │   │   ├── indexes.txt
+│   │   │   ├── lookups.txt
+│   │   │   ├── operations.txt
+│   │   │   ├── search.txt
+│   │   │   └── validators.txt
+│   │   ├── redirects.txt
+│   │   ├── sitemaps.txt
+│   │   ├── sites.txt
+│   │   ├── staticfiles.txt
+│   │   └── syndication.txt
+│   ├── csrf.txt
+│   ├── databases.txt
+│   ├── django-admin.txt
+│   ├── exceptions.txt
+│   ├── files
+│   │   ├── file.txt
+│   │   ├── index.txt
+│   │   ├── storage.txt
+│   │   └── uploads.txt
+│   ├── forms
+│   │   ├── api.txt
+│   │   ├── fields.txt
+│   │   ├── formsets.txt
+│   │   ├── index.txt
+│   │   ├── models.txt
+│   │   ├── renderers.txt
+│   │   ├── validation.txt
+│   │   └── widgets.txt
+│   ├── index.txt
+│   ├── logging.txt
+│   ├── middleware.txt
+│   ├── migration-operations.txt
+│   ├── models
+│   │   ├── class.txt
+│   │   ├── conditional-expressions.txt
+│   │   ├── constraints.txt
+│   │   ├── database-functions.txt
+│   │   ├── expressions.txt
+│   │   ├── fields.txt
+│   │   ├── index.txt
+│   │   ├── indexes.txt
+│   │   ├── instances.txt
+│   │   ├── lookups.txt
+│   │   ├── meta.txt
+│   │   ├── options.txt
+│   │   ├── querysets.txt
+│   │   └── relations.txt
+│   ├── paginator.txt
+│   ├── request-response.txt
+│   ├── schema-editor.txt
+│   ├── settings.txt
+│   ├── signals.txt
+│   ├── template-response.txt
+│   ├── templates
+│   │   ├── api.txt
+│   │   ├── builtins.txt
+│   │   ├── index.txt
+│   │   └── language.txt
+│   ├── unicode.txt
+│   ├── urlresolvers.txt
+│   ├── urls.txt
+│   ├── utils.txt
+│   ├── validators.txt
+│   └── views.txt
+├── releases
+│   ├── 0.95.txt
+│   ├── 0.96.txt
+│   ├── 1.0-porting-guide.txt
+│   ├── 1.0.1.txt
+│   ├── 1.0.2.txt
+│   ├── 1.0.txt
+│   ├── 1.1.2.txt
+│   ├── 1.1.3.txt
+│   ├── 1.1.4.txt
+│   ├── 1.1.txt
+│   ├── 1.10.1.txt
+│   ├── 1.10.2.txt
+│   ├── 1.10.3.txt
+│   ├── 1.10.4.txt
+│   ├── 1.10.5.txt
+│   ├── 1.10.6.txt
+│   ├── 1.10.7.txt
+│   ├── 1.10.8.txt
+│   ├── 1.10.txt
+│   ├── 1.11.1.txt
+│   ├── 1.11.10.txt
+│   ├── 1.11.11.txt
+│   ├── 1.11.12.txt
+│   ├── 1.11.13.txt
+│   ├── 1.11.14.txt
+│   ├── 1.11.15.txt
+│   ├── 1.11.16.txt
+│   ├── 1.11.17.txt
+│   ├── 1.11.18.txt
+│   ├── 1.11.19.txt
+│   ├── 1.11.2.txt
+│   ├── 1.11.20.txt
+│   ├── 1.11.21.txt
+│   ├── 1.11.22.txt
+│   ├── 1.11.23.txt
+│   ├── 1.11.24.txt
+│   ├── 1.11.25.txt
+│   ├── 1.11.26.txt
+│   ├── 1.11.27.txt
+│   ├── 1.11.28.txt
+│   ├── 1.11.29.txt
+│   ├── 1.11.3.txt
+│   ├── 1.11.4.txt
+│   ├── 1.11.5.txt
+│   ├── 1.11.6.txt
+│   ├── 1.11.7.txt
+│   ├── 1.11.8.txt
+│   ├── 1.11.9.txt
+│   ├── 1.11.txt
+│   ├── 1.2.1.txt
+│   ├── 1.2.2.txt
+│   ├── 1.2.3.txt
+│   ├── 1.2.4.txt
+│   ├── 1.2.5.txt
+│   ├── 1.2.6.txt
+│   ├── 1.2.7.txt
+│   ├── 1.2.txt
+│   ├── 1.3.1.txt
+│   ├── 1.3.2.txt
+│   ├── 1.3.3.txt
+│   ├── 1.3.4.txt
+│   ├── 1.3.5.txt
+│   ├── 1.3.6.txt
+│   ├── 1.3.7.txt
+│   ├── 1.3.txt
+│   ├── 1.4.1.txt
+│   ├── 1.4.10.txt
+│   ├── 1.4.11.txt
+│   ├── 1.4.12.txt
+│   ├── 1.4.13.txt
+│   ├── 1.4.14.txt
+│   ├── 1.4.15.txt
+│   ├── 1.4.16.txt
+│   ├── 1.4.17.txt
+│   ├── 1.4.18.txt
+│   ├── 1.4.19.txt
+│   ├── 1.4.2.txt
+│   ├── 1.4.20.txt
+│   ├── 1.4.21.txt
+│   ├── 1.4.22.txt
+│   ├── 1.4.3.txt
+│   ├── 1.4.4.txt
+│   ├── 1.4.5.txt
+│   ├── 1.4.6.txt
+│   ├── 1.4.7.txt
+│   ├── 1.4.8.txt
+│   ├── 1.4.9.txt
+│   ├── 1.4.txt
+│   ├── 1.5.1.txt
+│   ├── 1.5.10.txt
+│   ├── 1.5.11.txt
+│   ├── 1.5.12.txt
+│   ├── 1.5.2.txt
+│   ├── 1.5.3.txt
+│   ├── 1.5.4.txt
+│   ├── 1.5.5.txt
+│   ├── 1.5.6.txt
+│   ├── 1.5.7.txt
+│   ├── 1.5.8.txt
+│   ├── 1.5.9.txt
+│   ├── 1.5.txt
+│   ├── 1.6.1.txt
+│   ├── 1.6.10.txt
+│   ├── 1.6.11.txt
+│   ├── 1.6.2.txt
+│   ├── 1.6.3.txt
+│   ├── 1.6.4.txt
+│   ├── 1.6.5.txt
+│   ├── 1.6.6.txt
+│   ├── 1.6.7.txt
+│   ├── 1.6.8.txt
+│   ├── 1.6.9.txt
+│   ├── 1.6.txt
+│   ├── 1.7.1.txt
+│   ├── 1.7.10.txt
+│   ├── 1.7.11.txt
+│   ├── 1.7.2.txt
+│   ├── 1.7.3.txt
+│   ├── 1.7.4.txt
+│   ├── 1.7.5.txt
+│   ├── 1.7.6.txt
+│   ├── 1.7.7.txt
+│   ├── 1.7.8.txt
+│   ├── 1.7.9.txt
+│   ├── 1.7.txt
+│   ├── 1.8.1.txt
+│   ├── 1.8.10.txt
+│   ├── 1.8.11.txt
+│   ├── 1.8.12.txt
+│   ├── 1.8.13.txt
+│   ├── 1.8.14.txt
+│   ├── 1.8.15.txt
+│   ├── 1.8.16.txt
+│   ├── 1.8.17.txt
+│   ├── 1.8.18.txt
+│   ├── 1.8.19.txt
+│   ├── 1.8.2.txt
+│   ├── 1.8.3.txt
+│   ├── 1.8.4.txt
+│   ├── 1.8.5.txt
+│   ├── 1.8.6.txt
+│   ├── 1.8.7.txt
+│   ├── 1.8.8.txt
+│   ├── 1.8.9.txt
+│   ├── 1.8.txt
+│   ├── 1.9.1.txt
+│   ├── 1.9.10.txt
+│   ├── 1.9.11.txt
+│   ├── 1.9.12.txt
+│   ├── 1.9.13.txt
+│   ├── 1.9.2.txt
+│   ├── 1.9.3.txt
+│   ├── 1.9.4.txt
+│   ├── 1.9.5.txt
+│   ├── 1.9.6.txt
+│   ├── 1.9.7.txt
+│   ├── 1.9.8.txt
+│   ├── 1.9.9.txt
+│   ├── 1.9.txt
+│   ├── 2.0.1.txt
+│   ├── 2.0.10.txt
+│   ├── 2.0.11.txt
+│   ├── 2.0.12.txt
+│   ├── 2.0.13.txt
+│   ├── 2.0.2.txt
+│   ├── 2.0.3.txt
+│   ├── 2.0.4.txt
+│   ├── 2.0.5.txt
+│   ├── 2.0.6.txt
+│   ├── 2.0.7.txt
+│   ├── 2.0.8.txt
+│   ├── 2.0.9.txt
+│   ├── 2.0.txt
+│   ├── 2.1.1.txt
+│   ├── 2.1.10.txt
+│   ├── 2.1.11.txt
+│   ├── 2.1.12.txt
+│   ├── 2.1.13.txt
+│   ├── 2.1.14.txt
+│   ├── 2.1.15.txt
+│   ├── 2.1.2.txt
+│   ├── 2.1.3.txt
+│   ├── 2.1.4.txt
+│   ├── 2.1.5.txt
+│   ├── 2.1.6.txt
+│   ├── 2.1.7.txt
+│   ├── 2.1.8.txt
+│   ├── 2.1.9.txt
+│   ├── 2.1.txt
+│   ├── 2.2.1.txt
+│   ├── 2.2.10.txt
+│   ├── 2.2.11.txt
+│   ├── 2.2.12.txt
+│   ├── 2.2.13.txt
+│   ├── 2.2.14.txt
+│   ├── 2.2.15.txt
+│   ├── 2.2.16.txt
+│   ├── 2.2.17.txt
+│   ├── 2.2.18.txt
+│   ├── 2.2.19.txt
+│   ├── 2.2.2.txt
+│   ├── 2.2.20.txt
+│   ├── 2.2.21.txt
+│   ├── 2.2.22.txt
+│   ├── 2.2.23.txt
+│   ├── 2.2.24.txt
+│   ├── 2.2.3.txt
+│   ├── 2.2.4.txt
+│   ├── 2.2.5.txt
+│   ├── 2.2.6.txt
+│   ├── 2.2.7.txt
+│   ├── 2.2.8.txt
+│   ├── 2.2.9.txt
+│   ├── 2.2.txt
+│   ├── 3.0.1.txt
+│   ├── 3.0.10.txt
+│   ├── 3.0.11.txt
+│   ├── 3.0.12.txt
+│   ├── 3.0.13.txt
+│   ├── 3.0.14.txt
+│   ├── 3.0.2.txt
+│   ├── 3.0.3.txt
+│   ├── 3.0.4.txt
+│   ├── 3.0.5.txt
+│   ├── 3.0.6.txt
+│   ├── 3.0.7.txt
+│   ├── 3.0.8.txt
+│   ├── 3.0.9.txt
+│   ├── 3.0.txt
+│   ├── 3.1.1.txt
+│   ├── 3.1.10.txt
+│   ├── 3.1.11.txt
+│   ├── 3.1.12.txt
+│   ├── 3.1.13.txt
+│   ├── 3.1.2.txt
+│   ├── 3.1.3.txt
+│   ├── 3.1.4.txt
+│   ├── 3.1.5.txt
+│   ├── 3.1.6.txt
+│   ├── 3.1.7.txt
+│   ├── 3.1.8.txt
+│   ├── 3.1.9.txt
+│   ├── 3.1.txt
+│   ├── 3.2.1.txt
+│   ├── 3.2.2.txt
+│   ├── 3.2.3.txt
+│   ├── 3.2.4.txt
+│   ├── 3.2.5.txt
+│   ├── 3.2.6.txt
+│   ├── 3.2.7.txt
+│   ├── 3.2.txt
+│   ├── 4.0.txt
+│   ├── index.txt
+│   └── security.txt
+├── requirements.txt
+├── spelling_wordlist
+├── topics
+│   ├── async.txt
+│   ├── auth
+│   │   ├── customizing.txt
+│   │   ├── default.txt
+│   │   ├── index.txt
+│   │   └── passwords.txt
+│   ├── cache.txt
+│   ├── checks.txt
+│   ├── class-based-views
+│   │   ├── generic-display.txt
+│   │   ├── generic-editing.txt
+│   │   ├── index.txt
+│   │   ├── intro.txt
+│   │   └── mixins.txt
+│   ├── conditional-view-processing.txt
+│   ├── db
+│   │   ├── aggregation.txt
+│   │   ├── examples
+│   │   │   ├── index.txt
+│   │   │   ├── many_to_many.txt
+│   │   │   ├── many_to_one.txt
+│   │   │   └── one_to_one.txt
+│   │   ├── index.txt
+│   │   ├── instrumentation.txt
+│   │   ├── managers.txt
+│   │   ├── models.txt
+│   │   ├── multi-db.txt
+│   │   ├── optimization.txt
+│   │   ├── queries.txt
+│   │   ├── search.txt
+│   │   ├── sql.txt
+│   │   ├── tablespaces.txt
+│   │   └── transactions.txt
+│   ├── email.txt
+│   ├── external-packages.txt
+│   ├── files.txt
+│   ├── forms
+│   │   ├── formsets.txt
+│   │   ├── index.txt
+│   │   ├── media.txt
+│   │   └── modelforms.txt
+│   ├── http
+│   │   ├── _images
+│   │   │   └── middleware.pdf
+│   │   ├── decorators.txt
+│   │   ├── file-uploads.txt
+│   │   ├── generic-views.txt
+│   │   ├── index.txt
+│   │   ├── middleware.txt
+│   │   ├── sessions.txt
+│   │   ├── shortcuts.txt
+│   │   ├── urls.txt
+│   │   └── views.txt
+│   ├── i18n
+│   │   ├── formatting.txt
+│   │   ├── index.txt
+│   │   ├── timezones.txt
+│   │   └── translation.txt
+│   ├── index.txt
+│   ├── install.txt
+│   ├── logging.txt
+│   ├── migrations.txt
+│   ├── pagination.txt
+│   ├── performance.txt
+│   ├── security.txt
+│   ├── serialization.txt
+│   ├── settings.txt
+│   ├── signals.txt
+│   ├── signing.txt
+│   ├── templates.txt
+│   └── testing
+│       ├── _images
+│       │   ├── django_unittest_classes_hierarchy.graffle
+│       │   ├── django_unittest_classes_hierarchy.pdf
+│       │   └── django_unittest_classes_hierarchy.svg
+│       ├── advanced.txt
+│       ├── index.txt
+│       ├── overview.txt
+│       └── tools.txt
+└── tree.log
+
+48 directories, 584 files
