@@ -1,161 +1,403 @@
-# Sphinx documentation build configuration file
+# Django documentation build configuration file, created by
+# sphinx-quickstart on Thu Mar 27 09:06:53 2008.
+#
+# This file is execfile()d with the current directory set to its containing dir.
+#
+# The contents of this file are pickled, so don't put values in the namespace
+# that aren't picklable (module imports are okay, they're removed automatically).
+#
+# All configuration values have a default; values that are commented out
+# serve to show the default.
 
-import re
+import sys
+from os.path import abspath, dirname, join
 
-import sphinx
+# Workaround for sphinx-build recursion limit overflow:
+# pickle.dump(doctree, f, pickle.HIGHEST_PROTOCOL)
+#  RuntimeError: maximum recursion depth exceeded while pickling an object
+#
+# Python's default allowed recursion depth is 1000 but this isn't enough for
+# building docs/ref/settings.txt sometimes.
+# https://groups.google.com/g/sphinx-dev/c/MtRf64eGtv4/discussion
+sys.setrecursionlimit(2000)
 
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx.ext.todo',
-              'sphinx.ext.autosummary', 'sphinx.ext.extlinks',
-              'sphinx.ext.intersphinx',
-              'sphinx.ext.viewcode', 'sphinx.ext.inheritance_diagram']
+# Make sure we get the version of this copy of Django
+sys.path.insert(1, dirname(dirname(abspath(__file__))))
 
-root_doc = 'contents'
-templates_path = ['_templates']
-exclude_patterns = ['_build']
+# If extensions (or modules to document with autodoc) are in another directory,
+# add these directories to sys.path here. If the directory is relative to the
+# documentation root, use os.path.abspath to make it absolute, like shown here.
+sys.path.append(abspath(join(dirname(__file__), "_ext")))
 
-project = 'Sphinx'
-copyright = '2007-2021, Georg Brandl and the Sphinx team'
-version = sphinx.__display_version__
-release = version
-show_authors = True
+# -- General configuration -----------------------------------------------------
 
-html_theme = 'sphinx13'
-html_theme_path = ['_themes']
-modindex_common_prefix = ['sphinx.']
-html_static_path = ['_static']
-html_sidebars = {'index': ['indexsidebar.html', 'searchbox.html']}
-html_title = 'Sphinx documentation'
-html_additional_pages = {'index': 'index.html'}
-html_use_opensearch = 'https://www.sphinx-doc.org/en/master'
-html_baseurl = 'https://www.sphinx-doc.org/en/master/'
-html_favicon = '_static/favicon.svg'
+# If your documentation needs a minimal Sphinx version, state it here.
+needs_sphinx = '1.6.0'
 
-htmlhelp_basename = 'Sphinxdoc'
+# Add any Sphinx extension module names here, as strings. They can be extensions
+# coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
+extensions = [
+    "djangodocs",
+    'sphinx.ext.extlinks',
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.viewcode",
+    "sphinx.ext.autosectionlabel",
+]
 
-epub_theme = 'epub'
-epub_basename = 'sphinx'
-epub_author = 'Georg Brandl'
-epub_publisher = 'https://sphinx-doc.org/'
-epub_uid = 'web-site'
-epub_scheme = 'url'
-epub_identifier = epub_publisher
-epub_pre_files = [('index.xhtml', 'Welcome')]
-epub_post_files = [('usage/installation.xhtml', 'Installing Sphinx'),
-                   ('develop.xhtml', 'Sphinx development')]
-epub_exclude_files = ['_static/opensearch.xml', '_static/doctools.js',
-                      '_static/jquery.js', '_static/searchtools.js',
-                      '_static/underscore.js', '_static/basic.css',
-                      '_static/language_data.js',
-                      'search.html', '_static/websupport.js']
-epub_fix_images = False
-epub_max_image_width = 0
-epub_show_urls = 'inline'
-epub_use_index = False
-epub_guide = (('toc', 'contents.xhtml', 'Table of Contents'),)
-epub_description = 'Sphinx documentation generator system manual'
+# AutosectionLabel settings.
+# Uses a <page>:<label> schema which doesn't work for duplicate sub-section
+# labels, so set max depth.
+autosectionlabel_prefix_document = True
+autosectionlabel_maxdepth = 2
 
-latex_documents = [('contents', 'sphinx.tex', 'Sphinx Documentation',
-                    'Georg Brandl', 'manual', 1)]
-latex_logo = '_static/sphinx.png'
-latex_elements = {
-    'fontenc': r'\usepackage[LGR,X2,T1]{fontenc}',
-    'passoptionstopackages': r'''
-\PassOptionsToPackage{svgnames}{xcolor}
-''',
-    'preamble': r'''
-\DeclareUnicodeCharacter{229E}{\ensuremath{\boxplus}}
-\setcounter{tocdepth}{3}%    depth of what main TOC shows (3=subsubsection)
-\setcounter{secnumdepth}{1}% depth of section numbering
-''',
-    # fix missing index entry due to RTD doing only once pdflatex after makeindex
-    'printindex': r'''
-\IfFileExists{\jobname.ind}
-             {\footnotesize\raggedright\printindex}
-             {\begin{sphinxtheindex}\end{sphinxtheindex}}
-''',
+# Linkcheck settings.
+linkcheck_ignore = [
+    # Special-use addresses and domain names. (RFC 6761/6890)
+    r'^https?://(?:127\.0\.0\.1|\[::1\])(?::\d+)?/',
+    r'^https?://(?:[^/\.]+\.)*example\.(?:com|net|org)(?::\d+)?/',
+    r'^https?://(?:[^/\.]+\.)*(?:example|invalid|localhost|test)(?::\d+)?/',
+    # Pages that are inaccessible because they require authentication.
+    r'^https://github\.com/[^/]+/[^/]+/fork',
+    r'^https://code\.djangoproject\.com/github/login',
+    r'^https://code\.djangoproject\.com/newticket',
+    r'^https://(?:code|www)\.djangoproject\.com/admin/',
+    r'^https://www\.djangoproject\.com/community/add/blogs/',
+    r'^https://www\.google\.com/webmasters/tools/ping',
+    r'^https://search\.google\.com/search-console/welcome',
+    # Fragments used to dynamically switch content or populate fields.
+    r'^https://web\.libera\.chat/#',
+    r'^https://github\.com/[^#]+#L\d+-L\d+$',
+    r'^https://help\.apple\.com/itc/podcasts_connect/#/itc',
+    # Anchors on certain pages with missing a[name] attributes.
+    r'^https://tools\.ietf\.org/html/rfc1123\.html#section-',
+]
+
+# Spelling check needs an additional module that is not installed by default.
+# Add it only if spelling check is requested so docs can be generated without it.
+if 'spelling' in sys.argv:
+    extensions.append("sphinxcontrib.spelling")
+
+# Spelling language.
+spelling_lang = 'en_US'
+
+# Location of word list.
+spelling_word_list_filename = 'spelling_wordlist'
+
+spelling_warning = True
+
+# Add any paths that contain templates here, relative to this directory.
+# templates_path = []
+
+# The suffix of source filenames.
+source_suffix = '.txt'
+
+# The encoding of source files.
+# source_encoding = 'utf-8-sig'
+
+# The master toctree document.
+master_doc = 'contents'
+
+# General substitutions.
+project = 'Django'
+copyright = 'Django Software Foundation and contributors'
+
+
+# The version info for the project you're documenting, acts as replacement for
+# |version| and |release|, also used in various other places throughout the
+# built documents.
+#
+# The short X.Y version.
+version = '4.0'
+# The full version, including alpha/beta/rc tags.
+try:
+    from django import VERSION, get_version
+except ImportError:
+    release = version
+else:
+    def django_release():
+        pep440ver = get_version()
+        if VERSION[3:5] == ('alpha', 0) and 'dev' not in pep440ver:
+            return pep440ver + '.dev'
+        return pep440ver
+
+    release = django_release()
+
+# The "development version" of Django
+django_next_version = '4.0'
+
+extlinks = {
+    'bpo': ('https://bugs.python.org/issue%s', 'bpo-'),
+    'commit': ('https://github.com/django/django/commit/%s', ''),
+    'cve': ('https://nvd.nist.gov/vuln/detail/CVE-%s', 'CVE-'),
+    # A file or directory. GitHub redirects from blob to tree if needed.
+    'source': ('https://github.com/django/django/blob/main/%s', ''),
+    'ticket': ('https://code.djangoproject.com/ticket/%s', '#'),
 }
-latex_show_urls = 'footnote'
-latex_use_xindy = True
 
-autodoc_member_order = 'groupwise'
-autosummary_generate = False
-todo_include_todos = True
-extlinks = {'duref': ('https://docutils.sourceforge.io/docs/ref/rst/'
-                      'restructuredtext.html#%s', ''),
-            'durole': ('https://docutils.sourceforge.io/docs/ref/rst/'
-                       'roles.html#%s', ''),
-            'dudir': ('https://docutils.sourceforge.io/docs/ref/rst/'
-                      'directives.html#%s', '')}
+# The language for content autogenerated by Sphinx. Refer to documentation
+# for a list of supported languages.
+# language = None
 
-man_pages = [
-    ('contents', 'sphinx-all', 'Sphinx documentation generator system manual',
-     'Georg Brandl', 1),
-    ('man/sphinx-build', 'sphinx-build', 'Sphinx documentation generator tool',
-     '', 1),
-    ('man/sphinx-quickstart', 'sphinx-quickstart', 'Sphinx documentation '
-     'template generator', '', 1),
-    ('man/sphinx-apidoc', 'sphinx-apidoc', 'Sphinx API doc generator tool',
-     '', 1),
-    ('man/sphinx-autogen', 'sphinx-autogen', 'Generate autodoc stub pages',
-     '', 1),
-]
+# Location for .po/.mo translation files used when language is set
+locale_dirs = ['locale/']
 
-texinfo_documents = [
-    ('contents', 'sphinx', 'Sphinx Documentation', 'Georg Brandl',
-     'Sphinx', 'The Sphinx documentation builder.', 'Documentation tools',
-     1),
-]
+# There are two options for replacing |today|: either, you set today to some
+# non-false value, then it is used:
+# today = ''
+# Else, today_fmt is used as the format for a strftime call.
+today_fmt = '%B %d, %Y'
 
+# List of patterns, relative to source directory, that match files and
+# directories to ignore when looking for source files.
+exclude_patterns = ['_build', '_theme', 'requirements.txt']
+
+# The reST default role (used for this markup: `text`) to use for all documents.
+default_role = "default-role-error"
+
+# If true, '()' will be appended to :func: etc. cross-reference text.
+add_function_parentheses = True
+
+# If true, the current module name will be prepended to all description
+# unit titles (such as .. function::).
+add_module_names = False
+
+# If true, sectionauthor and moduleauthor directives will be shown in the
+# output. They are ignored by default.
+show_authors = False
+
+# The name of the Pygments (syntax highlighting) style to use.
+pygments_style = 'trac'
+
+# Links to Python's docs should reference the most recent version of the 3.x
+# branch, which is located at this URL.
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3/', None),
-    'requests': ('https://requests.readthedocs.io/en/master', None),
+    'sphinx': ('https://www.sphinx-doc.org/en/master/', None),
+    'psycopg2': ('https://www.psycopg.org/docs/', None),
 }
 
-# Sphinx document translation with sphinx gettext feature uses these settings:
-locale_dirs = ['locale/']
-gettext_compact = False
+# Python's docs don't change every week.
+intersphinx_cache_limit = 90  # days
+
+# The 'versionadded' and 'versionchanged' directives are overridden.
+suppress_warnings = ['app.add_directive']
+
+# -- Options for HTML output ---------------------------------------------------
+
+# The theme to use for HTML and HTML Help pages.  See the documentation for
+# a list of builtin themes.
+html_theme = "djangodocs"
+
+# Theme options are theme-specific and customize the look and feel of a theme
+# further.  For a list of options available for each theme, see the
+# documentation.
+# html_theme_options = {}
+
+# Add any paths that contain custom themes here, relative to this directory.
+html_theme_path = ["_theme"]
+
+# The name for this set of Sphinx documents.  If None, it defaults to
+# "<project> v<release> documentation".
+# html_title = None
+
+# A shorter title for the navigation bar.  Default is the same as html_title.
+# html_short_title = None
+
+# The name of an image file (relative to this directory) to place at the top
+# of the sidebar.
+# html_logo = None
+
+# The name of an image file (within the static path) to use as favicon of the
+# docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
+# pixels large.
+# html_favicon = None
+
+# Add any paths that contain custom static files (such as style sheets) here,
+# relative to this directory. They are copied after the builtin static files,
+# so a file named "default.css" will overwrite the builtin "default.css".
+# html_static_path = ["_static"]
+
+# If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
+# using the given strftime format.
+html_last_updated_fmt = '%b %d, %Y'
+
+# Content template for the index page.
+# html_index = ''
+
+# Custom sidebar templates, maps document names to template names.
+# html_sidebars = {}
+
+# Additional templates that should be rendered to pages, maps page names to
+# template names.
+html_additional_pages = {}
+
+# If false, no module index is generated.
+# html_domain_indices = True
+
+# If false, no index is generated.
+# html_use_index = True
+
+# If true, the index is split into individual pages for each letter.
+# html_split_index = False
+
+# If true, links to the reST sources are added to the pages.
+# html_show_sourcelink = True
+
+# If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
+# html_show_sphinx = True
+
+# If true, "(C) Copyright ..." is shown in the HTML footer. Default is True.
+# html_show_copyright = True
+
+# If true, an OpenSearch description file will be output, and all pages will
+# contain a <link> tag referring to it.  The value of this option must be the
+# base URL from which the finished HTML is served.
+# html_use_opensearch = ''
+
+# This is the file name suffix for HTML files (e.g. ".xhtml").
+# html_file_suffix = None
+
+# Output file base name for HTML help builder.
+htmlhelp_basename = 'Djangodoc'
+
+modindex_common_prefix = ["django."]
+
+# Appended to every page
+rst_epilog = """
+.. |django-users| replace:: :ref:`django-users <django-users-mailing-list>`
+.. |django-developers| replace:: :ref:`django-developers <django-developers-mailing-list>`
+.. |django-announce| replace:: :ref:`django-announce <django-announce-mailing-list>`
+.. |django-updates| replace:: :ref:`django-updates <django-updates-mailing-list>`
+"""
+
+# -- Options for LaTeX output --------------------------------------------------
+
+latex_elements = {
+    'preamble': (
+        '\\DeclareUnicodeCharacter{2264}{\\ensuremath{\\le}}'
+        '\\DeclareUnicodeCharacter{2265}{\\ensuremath{\\ge}}'
+        '\\DeclareUnicodeCharacter{2665}{[unicode-heart]}'
+        '\\DeclareUnicodeCharacter{2713}{[unicode-checkmark]}'
+    ),
+}
+
+# Grouping the document tree into LaTeX files. List of tuples
+# (source start file, target name, title, author, document class [howto/manual]).
+# latex_documents = []
+latex_documents = [
+    ('contents', 'django.tex', 'Django Documentation',
+     'Django Software Foundation', 'manual'),
+]
+
+# The name of an image file (relative to this directory) to place at the top of
+# the title page.
+# latex_logo = None
+
+# For "manual" documents, if this is true, then toplevel headings are parts,
+# not chapters.
+# latex_use_parts = False
+
+# If true, show page references after internal links.
+# latex_show_pagerefs = False
+
+# If true, show URL addresses after external links.
+# latex_show_urls = False
+
+# Documents to append as an appendix to all manuals.
+# latex_appendices = []
+
+# If false, no module index is generated.
+# latex_domain_indices = True
 
 
-# -- Extension interface -------------------------------------------------------
+# -- Options for manual page output --------------------------------------------
 
-from sphinx import addnodes  # noqa
-
-event_sig_re = re.compile(r'([a-zA-Z-]+)\s*\((.*)\)')
-
-
-def parse_event(env, sig, signode):
-    m = event_sig_re.match(sig)
-    if not m:
-        signode += addnodes.desc_name(sig, sig)
-        return sig
-    name, args = m.groups()
-    signode += addnodes.desc_name(name, name)
-    plist = addnodes.desc_parameterlist()
-    for arg in args.split(','):
-        arg = arg.strip()
-        plist += addnodes.desc_parameter(arg, arg)
-    signode += plist
-    return name
+# One entry per manual page. List of tuples
+# (source start file, name, description, authors, manual section).
+man_pages = [(
+    'ref/django-admin',
+    'django-admin',
+    'Utility script for the Django web framework',
+    ['Django Software Foundation'],
+    1
+)]
 
 
-def setup(app):
-    from sphinx.ext.autodoc import cut_lines
-    from sphinx.util.docfields import GroupedField
-    app.connect('autodoc-process-docstring', cut_lines(4, what=['module']))
-    app.add_object_type('confval', 'confval',
-                        objname='configuration value',
-                        indextemplate='pair: %s; configuration value')
-    app.add_object_type('setuptools-confval', 'setuptools-confval',
-                        objname='setuptools configuration value',
-                        indextemplate='pair: %s; setuptools configuration value')
-    fdesc = GroupedField('parameter', label='Parameters',
-                         names=['param'], can_collapse=True)
-    app.add_object_type('event', 'event', 'pair: %s; event', parse_event,
-                        doc_field_types=[fdesc])
+# -- Options for Texinfo output ------------------------------------------------
 
-    # workaround for RTD
-    from sphinx.util import logging
-    logger = logging.getLogger(__name__)
-    app.info = lambda *args, **kwargs: logger.info(*args, **kwargs)
-    app.warn = lambda *args, **kwargs: logger.warning(*args, **kwargs)
-    app.debug = lambda *args, **kwargs: logger.debug(*args, **kwargs)
+# List of tuples (startdocname, targetname, title, author, dir_entry,
+# description, category, toctree_only)
+texinfo_documents = [(
+    master_doc, "django", "", "", "Django",
+    "Documentation of the Django framework", "Web development", False
+)]
+
+
+# -- Options for Epub output ---------------------------------------------------
+
+# Bibliographic Dublin Core info.
+epub_title = project
+epub_author = 'Django Software Foundation'
+epub_publisher = 'Django Software Foundation'
+epub_copyright = copyright
+
+# The basename for the epub file. It defaults to the project name.
+# epub_basename = 'Django'
+
+# The HTML theme for the epub output. Since the default themes are not optimized
+# for small screen space, using the same theme for HTML and epub output is
+# usually not wise. This defaults to 'epub', a theme designed to save visual
+# space.
+epub_theme = 'djangodocs-epub'
+
+# The language of the text. It defaults to the language option
+# or en if the language is not set.
+# epub_language = ''
+
+# The scheme of the identifier. Typical schemes are ISBN or URL.
+# epub_scheme = ''
+
+# The unique identifier of the text. This can be an ISBN number
+# or the project homepage.
+# epub_identifier = ''
+
+# A unique identification for the text.
+# epub_uid = ''
+
+# A tuple containing the cover image and cover page html template filenames.
+epub_cover = ('', 'epub-cover.html')
+
+# A sequence of (type, uri, title) tuples for the guide element of content.opf.
+# epub_guide = ()
+
+# HTML files that should be inserted before the pages created by sphinx.
+# The format is a list of tuples containing the path and title.
+# epub_pre_files = []
+
+# HTML files shat should be inserted after the pages created by sphinx.
+# The format is a list of tuples containing the path and title.
+# epub_post_files = []
+
+# A list of files that should not be packed into the epub file.
+# epub_exclude_files = []
+
+# The depth of the table of contents in toc.ncx.
+# epub_tocdepth = 3
+
+# Allow duplicate toc entries.
+# epub_tocdup = True
+
+# Choose between 'default' and 'includehidden'.
+# epub_tocscope = 'default'
+
+# Fix unsupported image types using the PIL.
+# epub_fix_images = False
+
+# Scale large images.
+# epub_max_image_width = 0
+
+# How to display URL addresses: 'footnote', 'no', or 'inline'.
+# epub_show_urls = 'inline'
+
+# If false, no index is generated.
+# epub_use_index = True
